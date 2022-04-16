@@ -16,7 +16,7 @@
 
 // 'Return an empty array if input is an empty array' => []
 
-// [] 
+// []
 
 // 'Return an empty array if no x found' => []
 
@@ -51,29 +51,29 @@
 // ]
 
 const xMarksTheSpot = (input) => {
-    if(input.length === 0) {
-        return []
+    if (input.length === 0) {
+        return [];
     }
 
-    let xLocation = []
-    let xCoordinates = 0
+    let xLocation = [];
+    let xCoordinates = 0;
 
     input.forEach((arr, index) => {
-        if(arr.includes('x')) {
-            xLocation.push(index)
-            xCoordinates++
-            arr.forEach((item, index) {
-                if(item === 'x') {
-                    xLocation.push(index)
-                    xCoordinates++
+        if (arr.includes("x")) {
+            xLocation.push(index);
+            xCoordinates++;
+            arr.forEach((item, index) => {
+                if (item === "x") {
+                    xLocation.push(index);
+                    xCoordinates++;
                 }
-            })
+            });
         }
-    })
+    });
 
-    if(xCoordinates > 2) {
-        return []
+    if (xCoordinates > 2) {
+        return [];
     }
 
-    return xLocation
-  }
+    return xLocation;
+};
