@@ -29,11 +29,9 @@ var puzzle = [
 // [2,8,7,4,1,9,6,3,5],
 // [3,4,5,2,8,6,1,7,9]]
 
-let possMap = {};
-let solvedPuzzle;
-
 function sudoku(puzzle) {
-    solvedPuzzle = puzzle;
+    let solvedPuzzle = puzzle;
+    let possMap = {};
 
     // fills out possible numbers for each spot in array
     for (let i = 0; i < 9; i++) {
@@ -74,18 +72,174 @@ function sudoku(puzzle) {
                 }
             }
         }
+        // filter numbers in each box
+        let box1 = [];
+        let box2 = [];
+        let box3 = [];
+        let box4 = [];
+        let box5 = [];
+        let box6 = [];
+        let box7 = [];
+        let box8 = [];
+        let box9 = [];
 
-        for(let key in possMap) {
-            if(possMap[key].length === 1) {
-                console.log(possMap[key])
-                solvedPuzzle[key.split('')[0]][key.split('')[1]] = +possMap[key].join()
+        solvedPuzzle.forEach((row, i) => {
+            row.forEach((column, j) => {
+                if (solvedPuzzle[i][j] !== 0) {
+                    if (i < 3) {
+                        if (j < 3) {
+                            box1.push(solvedPuzzle[i][j]);
+                        } else if (j < 6) {
+                            box2.push(solvedPuzzle[i][j]);
+                        } else if (j < 9) {
+                            box3.push(solvedPuzzle[i][j]);
+                        }
+                    } else if (i < 6) {
+                        if (j < 3) {
+                            box4.push(solvedPuzzle[i][j]);
+                        } else if (j < 6) {
+                            box5.push(solvedPuzzle[i][j]);
+                        } else if (j < 9) {
+                            box6.push(solvedPuzzle[i][j]);
+                        }
+                    } else if (i < 9) {
+                        if (j < 3) {
+                            box7.push(solvedPuzzle[i][j]);
+                        } else if (j < 6) {
+                            box8.push(solvedPuzzle[i][j]);
+                        } else if (j < 9) {
+                            box9.push(solvedPuzzle[i][j]);
+                        }
+                    }
+                }
+            });
+        });
+
+        for (let key in possMap) {
+            let whichBox;
+
+            switch (key) {
+                case "00":
+                case "01":
+                case "02":
+                case "10":
+                case "11":
+                case "12":
+                case "20":
+                case "21":
+                case "22":
+                    whichBox = box1;
+                    break;
+                case "03":
+                case "04":
+                case "05":
+                case "13":
+                case "14":
+                case "15":
+                case "23":
+                case "24":
+                case "25":
+                    whichBox = box2;
+                    break;
+                case "06":
+                case "07":
+                case "08":
+                case "16":
+                case "17":
+                case "18":
+                case "26":
+                case "27":
+                case "28":
+                    whichBox = box3;
+                    break;
+                case "30":
+                case "31":
+                case "32":
+                case "40":
+                case "41":
+                case "42":
+                case "50":
+                case "51":
+                case "52":
+                    whichBox = box4;
+                    break;
+                case "33":
+                case "34":
+                case "35":
+                case "43":
+                case "44":
+                case "45":
+                case "53":
+                case "54":
+                case "55":
+                    whichBox = box5;
+                    break;
+                case "36":
+                case "37":
+                case "38":
+                case "46":
+                case "47":
+                case "48":
+                case "56":
+                case "57":
+                case "58":
+                    whichBox = box6;
+                    break;
+                case "60":
+                case "61":
+                case "62":
+                case "70":
+                case "71":
+                case "72":
+                case "80":
+                case "81":
+                case "82":
+                    whichBox = box7;
+                    break;
+                case "63":
+                case "64":
+                case "65":
+                case "73":
+                case "74":
+                case "75":
+                case "83":
+                case "84":
+                case "85":
+                    whichBox = box8;
+                    break;
+                case "66":
+                case "67":
+                case "68":
+                case "76":
+                case "77":
+                case "78":
+                case "86":
+                case "87":
+                case "88":
+                    whichBox = box9;
+                    break;
+            }
+
+            if (possMap[key].length > 1) {
+                possMap[key] = possMap[key].filter(
+                    (item) => !whichBox.includes(item)
+                );
+            }
+        }
+
+        for (let key in possMap) {
+            if (possMap[key].length === 1) {
+                solvedPuzzle[key.split("")[0]][key.split("")[1]] =
+                    +possMap[key].join();
             }
         }
     }
 
+    for (let keys in possMap) {
+        if (possMap[keys].length > 1) {
+            reduceAmount();
+        }
+    }
 
-    reduceAmount()
-    reduceAmount()
-    reduceAmount()
-    reduceAmount()
+    return solvedPuzzle;
 }
