@@ -21,27 +21,35 @@ function valueOfX(eq) {
     const splitByEquals = eq.split("=");
     let leftSide = splitByEquals[0].split(" ").filter((item) => item !== " ");
     let rightSide = splitByEquals[1].split(" ").filter((item) => item !== " ");
+    let xIsNegative = false;
 
     const reduceTheSide = (array) =>
-        array.map((item, i, arr) => {
-            if (arr.includes("x")) {
-                if (array[i - 1] === "-" && Number.isInteger(+item)) {
-                    return +item;
-                } else if (Number.isInteger(+item)) {
-                    return -item;
+        array
+            .map((item, i, arr) => {
+                if (arr.includes("x")) {
+                    if (item === "x" && arr[i - 1] === "-") {
+                        xIsNegative = true;
+                    }
+                    if (array[i - 1] === "-" && Number.isInteger(+item)) {
+                        return +item;
+                    } else if (Number.isInteger(+item)) {
+                        return -item;
+                    } else {
+                        return null;
+                    }
                 } else {
-                    return null;
+                    if (array[i - 1] === "-" && Number.isInteger(+item)) {
+                        return -item;
+                    } else if (Number.isInteger(+item)) {
+                        return +item;
+                    } else {
+                        return null;
+                    }
                 }
-            } else {
-                if (array[i - 1] === "-" && Number.isInteger(+item)) {
-                    return -item;
-                } else if (Number.isInteger(+item)) {
-                    return +item;
-                } else {
-                    return null;
-                }
-            }
-        }).reduce((acc, curr) => acc + curr, 0);
+            })
+            .reduce((acc, curr) => acc + curr, 0);
 
-         console.log(reduceTheSide(leftSide), reduceTheSide(rightSide))
+    return xIsNegative
+        ? 0 - (reduceTheSide(leftSide) + reduceTheSide(rightSide))
+        : reduceTheSide(leftSide) + reduceTheSide(rightSide);
 }
