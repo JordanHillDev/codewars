@@ -17,19 +17,13 @@
 
 const runLengthEncoding = function (str) {
     return str.split("").reduce((acc, curr, i, arr) => {
-        if (curr !== arr[i + 1]) {
-            return acc.push([1, curr]), acc;
+        let count = 0;
+        let idx = i;
+        while (arr[idx] === curr) {
+            ++count;
+            ++idx;
         }
-
-        if (curr === arr[i + 1]) {
-            let count = 0;
-            let idx = i;
-            while (arr[idx] === curr) {
-                ++count;
-                ++idx;
-            }
-            arr.splice(i, count - 1);
-            return acc.push([count, curr]), acc;
-        }
+        arr.splice(i, count - 1);
+        return acc.push([count, curr]), acc;
     }, []);
 };
