@@ -24,5 +24,5 @@ function isValidWalk(walk) {
                 coordinate[0]--;
         }
     });
-    return coordinate[0] === 0 && coordinate[1] === 0 ? true : false;
+    return coordinate[0] === 0 && coordinate[1] === 0;
 }
