@@ -15,7 +15,6 @@ function moveZeros(arr) {
     return arr;
 }
 
-
 //much faster solution
 function moveZeros(arr) {
     let count = 0;
@@ -24,9 +23,8 @@ function moveZeros(arr) {
         if (arr[i] !== 0) {
             arr[count++] = arr[i];
         }
-        console.log(arr)
+        console.log(arr);
     }
-    
 
     while (count < arr.length) {
         arr[count++] = 0;
