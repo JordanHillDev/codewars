@@ -17,7 +17,6 @@
 // nextBigger(num: 111) // returns nil
 // nextBigger(num: 531) // returns nil
 
-
 //solution that works but is too slow
 function nextBigger(n) {
     let finalArr = permutate(n);
@@ -48,4 +47,46 @@ function nextBigger(n) {
     if (finalArr.lastIndexOf(n) === finalArr.length - 1) return -1;
 
     return finalArr[finalArr.lastIndexOf(n) + 1];
+}
+
+//not a solution that works but good practice slicing
+function nextBigger(n) {
+    let numStr = n.toString();
+
+    let higherNumber;
+
+    for (let i = numStr.length; i >= 2; i--) {
+        let tempStrBefore = numStr.slice(0, i - 2);
+        let tempStrAfter = numStr.slice(i, numStr.length);
+        let [a, b] = numStr.slice(i - 2, i).split("");
+        higherNumber = tempStrBefore + b + a + tempStrAfter;
+
+        if (+higherNumber > n) i = 0;
+    }
+
+    if (+higherNumber > n) return +higherNumber;
+    else {
+        return -1;
+    }
+}
+
+//actual solution
+
+const sortedDigits = (n) => {
+    let arr = n.toString().split("");
+    arr.sort((a, b) => b - a);
+    return arr;
+};
+
+function nextBigger(n) {
+    let arr = sortedDigits(n);
+    let max = parseInt(arr.join(""), 10);
+
+    for (var i = n + 1; i <= max; i++) {
+        if (sortedDigits(i).every((x, j) => x === arr[j])) {
+            return i;
+        }
+    }
+
+    return -1;
 }
