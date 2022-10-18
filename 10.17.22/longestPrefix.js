@@ -4,20 +4,15 @@
 // return longest length of letters that are in all words || ''
 
 function longestCommonPrefix(strs) {
-    if(strs.length < 1) return '';
+    let match = "";
 
-    strs = strs.sort((a, b) => b.length - a.length)
-
-    let longest = ""
-
-    let counter = 0;
-
-    while(strs.every(word => word[counter] === strs[0][counter])) {
-        longest += strs[0][counter]
-        counter++
+    for (let i = 0; i < strs[0].length; i++) {
+        if (strs.every((word) => word[i] === strs[0][i])) match += strs[0][i];
+        else {
+            i += strs[0].length;
+        }
     }
-
-    return longest
+    return match;
 }
 
-console.log(longestCommonPrefix(["flower", "flow", "flight"]), 'fl')
+console.log(longestCommonPrefix(["flower", "flow", "flight"]), "fl");
